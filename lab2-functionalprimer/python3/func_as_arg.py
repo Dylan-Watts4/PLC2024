@@ -8,3 +8,10 @@ def applicatorFunc(inpFunc, a, b, s):
         return sum(inpFunc(a, b))/5
 
 print(applicatorFunc(listFunc, 1, 5, 's'))
+def applicatorFunc(inpFunc, a, b, s):
+    if s=='s':
+        return sum(inpFunc(a, b))
+    else:
+        return sum(inpFunc(a, b))/5
+
+print(applicatorFunc(listFunc, 1, 5, 's'))
