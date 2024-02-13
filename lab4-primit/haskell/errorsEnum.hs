@@ -5,9 +5,10 @@ import System.IO (hSetBuffering, stdout, BufferMode(..))
 main =
     do
     initialiseIO
-    putStrLn ("known errors = " ++ show allErrors)
-    error <- getElement "error"
-    putStrLn (show error ++ " results in: " ++ show (error2Result error))
+    -- Ammend the main to use the opposite function
+    putStrLn ("known results = " ++ show allResults)
+    result <- getElement "result"
+    putStrLn (show result ++ " leads to error: " ++ show (result2Error result))
     
 initialiseIO =
     do
@@ -26,6 +27,15 @@ data Result = Zero | Infinity | ABitDifferent | VeryDifferent
               Eq,   -- default equality testing
               Bounded, -- default minBound and maxBound
               Enum) -- default sequencing (needed for .. ranges)
+
+-- Add a new function that does the opposite of error2Result
+allResults :: [Result]
+allResults = [minBound .. maxBound]
+
+result2Error ABitDifferent = FP_Rounding
+result2Error Infinity = FP_Overflow
+result2Error Zero = FP_Underflow
+result2Error VeryDifferent = Int_Overflow
 
 allErrors :: [Error] -- ie it is a list of PL elements
 allErrors = [minBound .. maxBound]
